@@ -1,0 +1,11 @@
+<h2>Traders</h2>
+
+<ul class="traders">
+  <li *ngFor="let trader of traders">
+    <span class="badge text-success">{{trader.id}}</span> {{ trader.firstName }} {{ trader.lastName }} 
+    <br>$ {{ trader.account.usd | number: '1.0-2' }}
+    <br>€ {{ trader.account.eur | number: '1.0-2' }}
+    <br>£ {{ trader.account.gbp | number: '1.0-2' }}
+    <br><br>
+</li>
+</ul>
