@@ -4,9 +4,10 @@ import { TraderService } from '../trader.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TradeComponent } from '../trade/trade.component';
 import { Trade } from '../trade';
+import { currencyPair } from '../currencyPair';
 
 export interface DialogData{
-  amount: number
+  trade: Trade
 }
 
 @Component({
@@ -16,9 +17,8 @@ export interface DialogData{
 })
 export class AccountsComponent implements OnInit {
 
-  trade!: Trade;
-  amount!: number;
-
+  trade: Trade = <Trade>{};
+  cp: currencyPair = <currencyPair>{};
   trader: Trader = <Trader>{};
 
   constructor(
@@ -26,19 +26,35 @@ export class AccountsComponent implements OnInit {
     public dialog: MatDialog
     ) { }
 
+  executeTrade(currencyPairId: number) {
+    this.cp.id = currencyPairId;
+    this.trade.currencyPair = this.cp;
+    console.log(this.trade);
+    this.openDialog();
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(TradeComponent, {
       width: '250px',
       data: {
-        amount : this.amount
+        trade : this.trade
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.amount = result;
-      console.log(`they selected to trade ${this.amount}`)
-      // this.traderService.trade(this.trade)
+      this.trade.usdAmount = result;
+      if (this.trade.usdAmount) {
+        this.traderService.trade(this.trade)
+        .subscribe(
+          (res: any) => console.log(res),
+          (err: any) => console.log(err)
+        )
+        this.trade = <Trade>{};
+        this.cp = <currencyPair>{};
+        this.ngOnInit();
+      }
+      this.trade = <Trade>{};
+      this.cp = <currencyPair>{};
     });
   }
 
@@ -49,18 +65,13 @@ export class AccountsComponent implements OnInit {
   getTrader(): void {
     let jwt = localStorage.getItem('token')
     if (jwt) {
-      // console.log(jwt)
       this.traderService.getAuthenticatedTrader(jwt)
       .subscribe(
         (res: any) => {
-          // console.log(res);
           this.trader = res;
         },
         (err: any) => console.log(err)
       )
-    }
-    else {
-      console.log("IN ELSE BLOCK")
     }
   }
 

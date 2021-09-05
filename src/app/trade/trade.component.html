@@ -2,9 +2,9 @@
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>USD</mat-label>
-    <input matInput [(ngModel)]="data.amount">
+    <input matInput [(ngModel)]="data.trade.usdAmount">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button class="btn btn-outline-success" mat-button [mat-dialog-close]="data.amount" cdkFocusInitial>Trade</button>
+  <button class="btn btn-outline-success" mat-button [mat-dialog-close]="data.trade.usdAmount" cdkFocusInitial>Execute</button>
 </div>

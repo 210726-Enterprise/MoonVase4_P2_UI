@@ -1,8 +1,6 @@
-import { Account } from "./account";
+import { currencyPair } from "./currencyPair";
 
 export interface Trade {
-    currencyPair: {
-        id: number
-    },
+    currencyPair: currencyPair,
     usdAmount: number
 }
