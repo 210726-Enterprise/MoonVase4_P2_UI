@@ -14,12 +14,12 @@ export class TradersComponent implements OnInit {
   constructor(private traderService: TraderService) { }
 
   ngOnInit(): void {
-    this.getTraders();
+    // this.getTraders();
   }
 
-  getTraders(): void {
-    this.traderService.getTraders()
-    .subscribe(traders => this.traders=traders);
-  }
+  // getTraders(): void {
+  //   this.traderService.getTraders()
+  //   .subscribe(traders => this.traders=traders);
+  // }
 
 }

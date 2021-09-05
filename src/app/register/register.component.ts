@@ -11,6 +11,7 @@ import { TraderService } from '../trader.service';
 export class RegisterComponent implements OnInit {
 
   trader: Trader = <Trader>{};
+  loggedIn: Trader = <Trader>{};
 
   constructor(
     private router: Router,
@@ -24,7 +25,11 @@ export class RegisterComponent implements OnInit {
     this.traderService.registerTrader(this.trader)
     .subscribe(
       // redirect to login
-      res => console.log(res),
+      res => {
+        this.trader = res;
+        console.log(this.trader);
+
+      },
       err => console.log(err)
     )
     this.router.navigate(['/login']);

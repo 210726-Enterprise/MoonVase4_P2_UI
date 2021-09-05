@@ -1,0 +1,10 @@
+<h3 mat-dialog-title>How much would you like to trade?</h3>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>USD</mat-label>
+    <input matInput [(ngModel)]="data.amount">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-outline-success" mat-button [mat-dialog-close]="data.amount" cdkFocusInitial>Trade</button>
+</div>
