@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Visitor } from '../visitor';
 import { TraderService } from '../trader.service';
 import { Trader } from '../trader';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +14,12 @@ import { Trader } from '../trader';
 export class LoginComponent implements OnInit {
 
   visitor: Visitor = <Visitor>{};
+  hide = true;
 
   constructor(
     private traderService: TraderService,
-    private router: Router
+    private router: Router,
+    private flashMessagesService: FlashMessagesService
     ) { }
 
   ngOnInit(): void {
@@ -31,7 +34,10 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/account']);
 
       },
-      (err: any) => console.log(err)
+      (err: any) => {
+        this.flashMessagesService.show('Invalid credentials', { cssClass: 'alert-danger', timeout: 3000 });
+        console.log(err)
+      }
     )
   }
 

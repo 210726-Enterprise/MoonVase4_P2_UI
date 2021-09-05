@@ -14,7 +14,9 @@ import { MatSliderModule } from '@angular/material/slider'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatDialogModule } from '@angular/material/dialog'
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import { FlashMessagesModule } from 'angular2-flash-messages';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {MatMenuModule} from '@angular/material/menu';
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    FlashMessagesModule.forRoot(),
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
