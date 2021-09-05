@@ -36,7 +36,21 @@ export class TraderService {
   //   return this.http.get<Trader[]>(this.tradersUrl)
   // }
 
-  trade(trade: {}) {
+  // if .subscribe is used when this method is called, it should return an observable
+  // trade(trade: {}): Observable<Trade>{
+  //   let postOptions = {
+  //     headers: new HttpHeaders(
+  //       { 
+  //         'Content-Type': 'application/json',
+  //         'Access-Control-Allow-Origin': '*',
+  //         'Authorization': `Bearer ${localStorage.getItem('token')}`
+  //       }
+  //     )
+  //   }
+  //   return this.http.post<any>(`${this.baseUrl}/trade`, trade, postOptions);
+  // }
+
+  trade(trade: {}){
     let postOptions = {
       headers: new HttpHeaders(
         { 
@@ -46,12 +60,7 @@ export class TraderService {
         }
       )
     }
-    console.log("we are in traderService, callin the trade that returns nothing..")
-    console.log(trade)
-    let url = `${this.baseUrl}/trade`
-    console.log(url)
-    console.log(postOptions)
-    return this.http.post<any>(url, trade, postOptions);
+    return this.http.post<any>(`${this.baseUrl}/trade`, trade, postOptions);
   }
 
   registerTrader(trader: {}): Observable<Trader> {

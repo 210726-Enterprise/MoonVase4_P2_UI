@@ -9,11 +9,20 @@
             </div>
             <div class="card-footer text-center bg-success">
                 <h3 class="card-text text-white font-weight-bolder">USD
-                    <button *ngIf="trader.account.usd > 0" 
+                    <button *ngIf="trader.account.usd > 0"
+                        mat-button [matMenuTriggerFor]="trade"
+                        class="btn btn-outline-light btn-sm"
+                        style="float: right;">Trade</button>
+                        <mat-menu #trade="matMenu">
+                            <button mat-menu-item (click)="executeTrade(1)">EUR</button>
+                            <button mat-menu-item (click)="executeTrade(2)">GBP</button>
+                            <button mat-menu-item (click)="executeTrade(3)">NZD</button>
+                        </mat-menu>
+                    <!-- <button *ngIf="trader.account.usd > 0" 
                     type="button" 
                     class="btn btn-outline-light btn-sm"
                     style="float: right;"
-                    mat-raised-button (click)="executeTrade(1)">trade</button>
+                    mat-raised-button (click)="executeTrade(1)">trade</button> -->
                 </h3>
             </div>
         </div>
@@ -27,7 +36,8 @@
                     <button *ngIf="trader.account.eur > 0"
                     type="button"
                     class="btn btn-outline-light btn-sm"
-                    style="float: right;">trade</button>
+                    style="float: right;"
+                    mat-raised-button (click)="executeTrade(1)">trade</button>
                 </h3>
             </div>
         </div>
@@ -42,7 +52,7 @@
                     type="button"
                     class="btn btn-outline-light btn-sm"
                     style="float: right;"
-                    >trade</button>
+                    mat-raised-button (click)="executeTrade(2)">trade</button>
                 </h3>
             </div>
         </div>
@@ -52,7 +62,13 @@
                 <p class="card-text text-white display-6">NZ${{ trader.account.nzd | number: '1.2-2'}}</p>
             </div>
             <div class="card-footer text-center bg-success">
-                <h3 class="card-text text-white font-weight-bolder">NZD<button *ngIf="trader.account.nzd > 0" type="button" class="btn btn-outline-light btn-sm" style="float: right;">trade</button></h3>
+                <h3 class="card-text text-white font-weight-bolder">NZD
+                    <button *ngIf="trader.account.nzd > 0"
+                    type="button"
+                    class="btn btn-outline-light btn-sm"
+                    style="float: right;"
+                    mat-raised-button (click)="executeTrade(3)">trade</button>
+                </h3>
             </div>
         </div>
     </div>

@@ -41,14 +41,16 @@ export class AccountsComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       this.trade.usdAmount = result;
       if (this.trade.usdAmount) {
-        this.traderService.trade(this.trade)
-        .subscribe(
-          (res: any) => console.log(res),
-          (err: any) => console.log(err)
-        )
+        const response = await this.traderService.trade(this.trade).toPromise();
+        // .subscribe makes page reload before the trade is persisted, need to persist, then reload
+        // this.traderService.trade(this.trade)
+        //   .subscribe(
+        //     res => console.log(res),
+        //     err => console.log(err)
+        //   )
         this.trade = <Trade>{};
         this.cp = <currencyPair>{};
         this.ngOnInit();
@@ -67,10 +69,8 @@ export class AccountsComponent implements OnInit {
     if (jwt) {
       this.traderService.getAuthenticatedTrader(jwt)
       .subscribe(
-        (res: any) => {
-          this.trader = res;
-        },
-        (err: any) => console.log(err)
+        res => this.trader = res,
+        err => console.log(err)
       )
     }
   }
