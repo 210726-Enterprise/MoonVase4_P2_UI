@@ -6,5 +6,5 @@ export interface Trader {
     username: string;
     password: string;
     firstName: string;
-    lastName: string
+    lastName: string;
 }

@@ -1,0 +1,20 @@
+<div class="container mt-5">
+    <table class="table table-condensed table-striped table-bordered">
+      <thead class="bg-dark text-light font-weight-bolder">
+        <tr>
+          <th class="text-center"><h1>Currency Pair</h1></th>
+          <th class="text-center"><h1>Timestamp</h1></th>
+          <th class="text-center"><h1>Exchange Rate</h1></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let quote of this.cgService.Market">
+            <td class="text-center"><h1>{{ quote.CurrencyPair | uppercase}}</h1></td>
+            <td class="text-center"><h1>{{ quote.Timestamp | date: "medium" }}</h1></td>
+            <td *ngIf="quote.Delta>0" class="text-dark text-center table-success"><h1>{{ quote.ExchangeRate }}</h1></td>
+            <td *ngIf="quote.Delta==0" class="text-dark text-center"><h1>{{ quote.ExchangeRate }}</h1></td>
+            <td *ngIf="quote.Delta<0" class="text-dark text-center table-danger"><h1>{{ quote.ExchangeRate }}</h1></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

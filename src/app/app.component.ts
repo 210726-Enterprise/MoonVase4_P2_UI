@@ -1,18 +1,20 @@
-import { ThrowStmt } from '@angular/compiler';
-import { AfterViewInit, Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { Trader } from './trader';
-import { TraderService } from './trader.service';
-import { Visitor } from './visitor';
+import { Component, OnInit } from '@angular/core';
+import { CityindexService } from './cityindex.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   
-  constructor(private router: Router) {}
+  constructor(
+    public cgService: CityindexService
+  ) {}
+
+  ngOnInit(): void {
+    this.cgService.streamQuotes();
+  }
 
   title = 'fauxrex';
 }

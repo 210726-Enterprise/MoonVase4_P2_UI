@@ -1,10 +1,22 @@
-<h3 mat-dialog-title>How much would you like to trade?</h3>
+<h2 *ngIf="data.trade.currencyPair.id<0" mat-dialog-title>
+  {{ amountSold | number: '1.2-2' }} ÷
+  {{ cgService.Market[-data.trade.currencyPair.id-1].ExchangeRate }} = 
+  {{ currencySymbols[-data.trade.currencyPair.id-1] }}
+  {{ amountSold/cgService.Market[-data.trade.currencyPair.id-1].ExchangeRate | number: '1.2-2' }}
+</h2>
+<h2 *ngIf="data.trade.currencyPair.id>0" mat-dialog-title>
+  {{ currencySymbols[data.trade.currencyPair.id-1] }}
+  {{ amountSold | number: '1.2-2' }} ×
+  {{ cgService.Market[data.trade.currencyPair.id-1].ExchangeRate }} = 
+  ${{ amountSold*cgService.Market[data.trade.currencyPair.id-1].ExchangeRate | number: '1.2-2' }}
+
+</h2>
 <div mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>USD</mat-label>
-    <input matInput [(ngModel)]="data.trade.usdAmount">
-  </mat-form-field>
+<mat-form-field appearance="fill">
+    <mat-label>{{ data.trade.currencyPair.currencyPair | uppercase}}</mat-label>
+    <input matInput [(ngModel)]="amountSold">
+</mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button class="btn btn-outline-success" mat-button [mat-dialog-close]="data.trade.usdAmount" cdkFocusInitial>Execute</button>
+  <button class="btn btn-outline-success" mat-button [mat-dialog-close]="amountSold" cdkFocusInitial>Execute</button>
 </div>

@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import {MatIconModule} from '@angular/material/icon';
+import { QuotechartComponent } from './quotechart/quotechart.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {MatIconModule} from '@angular/material/icon';
     RegisterComponent,
     LoginComponent,
     TradeComponent,
+    QuotechartComponent,
 
   ],
   imports: [

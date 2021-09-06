@@ -1,6 +1,6 @@
 <div class="container mt-3" *ngIf="trader">
 
-    <h2>{{ trader.firstName }} {{ trader.lastName }} - Currency Holdings</h2>
+    <p class="display-4 text-center">{{ trader.firstName }} {{ trader.lastName }} - Currency Holdings</p>
     <div class="card-group mt-5">
 
         <div class="card mx-3">
@@ -14,15 +14,10 @@
                         class="btn btn-outline-light btn-sm"
                         style="float: right;">Trade</button>
                         <mat-menu #trade="matMenu">
-                            <button mat-menu-item (click)="executeTrade(1)">EUR</button>
-                            <button mat-menu-item (click)="executeTrade(2)">GBP</button>
-                            <button mat-menu-item (click)="executeTrade(3)">NZD</button>
+                            <button mat-menu-item (click)="executeTrade(1, false)">EUR</button>
+                            <button mat-menu-item (click)="executeTrade(2, false)">GBP</button>
+                            <button mat-menu-item (click)="executeTrade(3, false)">NZD</button>
                         </mat-menu>
-                    <!-- <button *ngIf="trader.account.usd > 0" 
-                    type="button" 
-                    class="btn btn-outline-light btn-sm"
-                    style="float: right;"
-                    mat-raised-button (click)="executeTrade(1)">trade</button> -->
                 </h3>
             </div>
         </div>

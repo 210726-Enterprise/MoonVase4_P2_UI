@@ -5,9 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { TradeComponent } from '../trade/trade.component';
 import { Trade } from '../trade';
 import { currencyPair } from '../currencyPair';
+import { CityindexService } from '../cityindex.service';
 
 export interface DialogData{
-  trade: Trade
+  trade: Trade;
+  trader: Trader;
 }
 
 @Component({
@@ -17,51 +19,19 @@ export interface DialogData{
 })
 export class AccountsComponent implements OnInit {
 
+  
   trade: Trade = <Trade>{};
   cp: currencyPair = <currencyPair>{};
   trader: Trader = <Trader>{};
 
   constructor(
     private traderService: TraderService,
-    public dialog: MatDialog
+    private cgService: CityindexService,
+    public dialog: MatDialog,
     ) { }
 
-  executeTrade(currencyPairId: number) {
-    this.cp.id = currencyPairId;
-    this.trade.currencyPair = this.cp;
-    console.log(this.trade);
-    this.openDialog();
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(TradeComponent, {
-      width: '250px',
-      data: {
-        trade : this.trade
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(async result => {
-      this.trade.usdAmount = result;
-      if (this.trade.usdAmount) {
-        const response = await this.traderService.trade(this.trade).toPromise();
-        // .subscribe makes page reload before the trade is persisted, need to persist, then reload
-        // this.traderService.trade(this.trade)
-        //   .subscribe(
-        //     res => console.log(res),
-        //     err => console.log(err)
-        //   )
-        this.trade = <Trade>{};
-        this.cp = <currencyPair>{};
-        this.ngOnInit();
-      }
-      this.trade = <Trade>{};
-      this.cp = <currencyPair>{};
-    });
-  }
-
   ngOnInit(): void {
-    this.getTrader();
+    this.getTrader()
   }
 
   getTrader(): void {
@@ -75,17 +45,54 @@ export class AccountsComponent implements OnInit {
     }
   }
 
+  executeTrade(currencyPairId: number, buyUSD=true) {
+    if (buyUSD) {
+      this.cp.id = currencyPairId;
+      this.cp.currencyPair = this.cgService.Market[currencyPairId-1].CurrencyPair.substring(0,3)
+      this.trade.currencyPair = this.cp;
+    } else {
+      this.cp.id = -currencyPairId;
+      this.cp.currencyPair = 'USD'
+      this.trade.currencyPair = this.cp;
+    }
+    
+    // this.trade.rate = this.cgService.Market[currencyPairId-1].ExchangeRate;
+    this.openDialog();
+  }
 
-  // getTrader(): void {
-  //   // this.trader = this.traderService.loggedInTrader;
-  //   // localStorage.setItem('loggedInTrader', JSON.stringify(this.trader))
-  //   var loggedIn = localStorage.getItem('loggedInTrader');
-  //   if (!!loggedIn) {
-  //     this.trader = JSON.parse(loggedIn);
-  //   }
-  // }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(TradeComponent, {
+    //   width: '350px',
+    //   height: '250px',
+      data: {
+        trader: this.trader,
+        trade : this.trade
+        
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(async result => {
+      // if this.trade.currencyPair.id < 0 - they're selling dollars
+      if (result) {
+      if (this.trade.currencyPair.id < 0) {
+        let rate = this.cgService.Market[-this.trade.currencyPair.id-1].ExchangeRate
+        this.trade.usdAmount = -result
+        this.trade.currencyPair.id = -this.trade.currencyPair.id
+        this.trade.rate = rate
+      } else {
+        let rate = this.cgService.Market[this.trade.currencyPair.id-1].ExchangeRate
+        this.trade.usdAmount = result*rate
+        this.trade.rate = rate
+      }
+      this.trade.timestamp = new Date();
+      console.log(this.trade)
+      const response = await this.traderService.trade(this.trade).toPromise();
+      this.trade = <Trade>{};
+      this.cp = <currencyPair>{};
+      this.ngOnInit();
+    }
+    this.trade = <Trade>{};
+    this.cp = <currencyPair>{};
+    });
+  }
 }
-
-
-
