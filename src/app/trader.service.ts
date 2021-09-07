@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Trader } from './trader';
+import { Trade } from './trade';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,42 @@ import { Trader } from './trader';
 export class TraderService {
 
   private baseUrl = 'http://localhost:8080/api';
-  private httpOptions = {
+  private httpOptions = { // these headers for /authenticate and /register only, others should include jwt from local storage
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-  private lsClient: any;
+  public tradeHist = <any>[];
 
   constructor(
     private http: HttpClient
+    // private tradeHist: TradehistComponent
     ) { }
+
+  getTrades() {
+    this.tradeHistory().
+      subscribe(
+        result => this.tradeHist = result
+      )
+  }
+
+  tradeHistory() {
+    console.log("attempting .get .../trade")
+    let requestOptions = {
+      headers: new HttpHeaders(
+        { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      )
+    }
+    return this.http.get<any>(`${this.baseUrl}/trade/history`, requestOptions)
+  }
+
+  async trades(trades: Trade[]) {
+    for (var trade of trades) {
+      await this.trade(trade).toPromise();
+    }
+  }
 
   trade(trade: {}){
     let postOptions = {
@@ -29,10 +58,11 @@ export class TraderService {
         }
       )
     }
+    this.tradeHist.unshift(trade)
     return this.http.post<any>(`${this.baseUrl}/trade`, trade, postOptions);
   }
 
-  registerTrader(trader: {}): Observable<Trader> {
+  registerTrader(trader: Trader): Observable<Trader> {
     return this.http.post<any>(`${this.baseUrl}/trader/register`, trader, this.httpOptions);
   }
 

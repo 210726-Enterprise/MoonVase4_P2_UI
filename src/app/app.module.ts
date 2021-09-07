@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import {MatIconModule} from '@angular/material/icon';
 import { QuotechartComponent } from './quotechart/quotechart.component';
+import { TradehistComponent } from './tradehist/tradehist.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { QuotechartComponent } from './quotechart/quotechart.component';
     LoginComponent,
     TradeComponent,
     QuotechartComponent,
+    TradehistComponent,
 
   ],
   imports: [
@@ -42,7 +44,7 @@ import { QuotechartComponent } from './quotechart/quotechart.component';
     MatDialogModule,
     MatMenuModule,
     FlashMessagesModule.forRoot(),
-    MatIconModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

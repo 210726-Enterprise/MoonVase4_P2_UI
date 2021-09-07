@@ -17,6 +17,7 @@ export class CityindexService {
 
   private session!: string;
 
+  public lastUpdate = new Date();
   public Market: Quote[] = [
     {CurrencyPair:'eurusd', MarketId:'401484347', ExchangeRate:0.0, Timestamp: new Date(), Delta: 0},
     {CurrencyPair:'gbpusd', MarketId:'401484392', ExchangeRate:0.0, Timestamp: new Date(), Delta: 0},
@@ -39,6 +40,7 @@ export class CityindexService {
   }
 
   getQuote(currencyPairIndex: number) {
+    this.lastUpdate = new Date();
     let marketId = this.Market[currencyPairIndex].MarketId;
     let url = `${this.base}/market/${marketId}/tickhistory?PriceTicks=1&priceType=MID&UserName=${credentials.user}&Session=${this.session}`
     this.http.get<any>(url, this.httpOptions)
@@ -63,9 +65,9 @@ export class CityindexService {
     this.getSessionId().then((data)=>{
       this.session = data.Session;
 
-      setInterval(() => this.getQuote(0), 1000)
-      setInterval(() => this.getQuote(1), 1000)
-      setInterval(() => this.getQuote(2), 1000)
+      setInterval(() => this.getQuote(0), 10000)
+      setInterval(() => this.getQuote(1), 10000)
+      setInterval(() => this.getQuote(2), 10000)
     })
   }
 
