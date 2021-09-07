@@ -19,6 +19,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 import {MatIconModule} from '@angular/material/icon';
 import { QuotechartComponent } from './quotechart/quotechart.component';
 import { TradehistComponent } from './tradehist/tradehist.component';
+import { AccountGuard } from './account.guard';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { TradehistComponent } from './tradehist/tradehist.component';
     FlashMessagesModule.forRoot(),
     MatIconModule
   ],
-  providers: [],
+  providers: [AccountGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

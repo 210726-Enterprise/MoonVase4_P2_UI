@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CityindexService } from './cityindex.service';
+import { TraderService } from './trader.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,12 @@ import { CityindexService } from './cityindex.service';
 export class AppComponent implements OnInit{
   
   constructor(
-    public cgService: CityindexService
+    public cgService: CityindexService,
+    public traderService: TraderService
   ) {}
 
   ngOnInit(): void {
+    localStorage.clear();
     this.cgService.streamQuotes();
   }
 

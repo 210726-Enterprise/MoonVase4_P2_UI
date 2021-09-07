@@ -34,11 +34,15 @@ export class RegisterComponent implements OnInit {
         res => {
           this.trader = res;
           console.log(this.trader);
+          this.router.navigate(['/login']);
   
         },
-        err => console.log(err)
+        err => {
+        console.log(err)
+        this.flashMessagesService.show('Invalid (try another username)', { cssClass: 'alert-warning', timeout: 3000 });
+        }
       )
-      this.router.navigate(['/login']);}
+    }
   }
 
 }
