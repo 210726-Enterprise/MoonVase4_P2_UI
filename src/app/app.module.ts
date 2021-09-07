@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu';
 import { FlashMessagesModule } from 'angular2-flash-messages';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { QuotechartComponent } from './quotechart/quotechart.component';
 import { TradehistComponent } from './tradehist/tradehist.component';
 import { AccountGuard } from './account.guard';

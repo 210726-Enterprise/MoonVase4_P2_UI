@@ -4,10 +4,10 @@
       <p class="display-6 text-white"><img class="mb-2 mx-3" src="/assets/foreign-exchange.svg" height="70">{{ title }}</p>
     </a>
     <div class="d-flex">
-    <a *ngIf="!traderService.loggedIn()" href="/login" class="text-decoration-none">
-      <h1 class="mx-3 text-light">Log In</h1>
+    <a *ngIf="!traderService.loggedIn()" [routerLink]="['/login']" class="text-decoration-none">
+      <h1 class="mx-3 text-light">Login</h1>
     </a>
-    <a *ngIf="!traderService.loggedIn()" href="/register" class="text-decoration-none">
+    <a *ngIf="!traderService.loggedIn()" [routerLink]="['/register']" class="text-decoration-none">
       <h1 class="mx-3 text-light">Register</h1>
     </a>
     <a *ngIf="traderService.loggedIn()" (click)="traderService.logOut()" class="text-decoration-none">
