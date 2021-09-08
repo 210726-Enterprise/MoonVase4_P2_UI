@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-sm bg-dark static-top">
+  <div class="container-fluid">
+    <a class="navbar-brand">
+      <p class="display-6 text-white"><img class="mb-2 mx-3" src="/assets/foreign-exchange.svg" height="70">{{ title }}</p>
+    </a>
+    <div class="d-flex">
+    <a *ngIf="!traderService.loggedIn()" [routerLink]="['/login']" class="text-decoration-none">
+      <h1 class="mx-3 text-light">Login</h1>
+    </a>
+    <a *ngIf="!traderService.loggedIn()" [routerLink]="['/register']" class="text-decoration-none">
+      <h1 class="mx-3 text-light">Register</h1>
+    </a>
+    <a *ngIf="traderService.loggedIn()" (click)="traderService.logOut()" class="text-decoration-none">
+      <h1 class="mx-3 text-light">Log Out</h1>
+    </a>
+    </div>
+
+    <!-- <div class="collapse navbar-collapse"></div>
+    <div class="collapse navbar-collapse">
+
+    <ul class="nav navbar-nav nav-pills">
+    <li class="nav-item active">
+      <h1 class="text-light mx-5">{{ cgService.Market[0].ExchangeRate }}</h1>
+      <h1 class="text-light mx-5">EURUSD</h1>
+    </li>
+
+    <li class="nav-item">
+    <h1 class="text-light display-1 mx-5">{{ cgService.Market[1].ExchangeRate }}</h1>
+    <h1 class="text-light display-1 mx-5">GBPUSD</h1>
+    </li>
+
+    <li class="nav-item">
+    <h1 class="text-light display-1 mx-5">{{ cgService.Market[2].ExchangeRate }}</h1>
+    <h1 class="text-light display-1 mx-5">NZDUSD</h1>
+    </li>
+    </ul>
+    
+  </div> -->
+</div>
+</nav>
+<flash-messages></flash-messages>
+<router-outlet></router-outlet>
+<app-quotechart></app-quotechart>
+<app-tradehist *ngIf="traderService.loggedIn()"></app-tradehist>
+
+ 

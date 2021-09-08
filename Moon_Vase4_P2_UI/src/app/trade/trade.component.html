@@ -1,0 +1,72 @@
+<h2 *ngIf="data.trade.currencyPair.id<0" mat-dialog-title>
+  ${{ amountSold | number: '1.2-2' }} ÷
+    {{ cgService.Market[-data.trade.currencyPair.id-1].ExchangeRate }}
+    <sup>$</sup>&frasl;<sub>{{ currencySymbols[-data.trade.currencyPair.id-1] }}</sub>
+   = 
+   {{ currencySymbols[-data.trade.currencyPair.id-1] }}{{ amountSold/cgService.Market[-data.trade.currencyPair.id-1].ExchangeRate | number: '1.2-2' }}
+</h2>
+
+<h2 *ngIf="data.trade.currencyPair.id>0" mat-dialog-title>
+  {{ currencySymbols[data.trade.currencyPair.id-1] }}{{ amountSold | number: '1.2-2' }} ×
+    {{ cgService.Market[data.trade.currencyPair.id-1].ExchangeRate }}
+    <sup>$</sup>&frasl;<sub>{{ currencySymbols[data.trade.currencyPair.id-1] }}</sub>
+   = 
+   ${{ amountSold*cgService.Market[data.trade.currencyPair.id-1].ExchangeRate | number: '1.2-2' }}
+</h2>
+
+<div mat-dialog-content>
+<mat-form-field appearance="fill">
+    <mat-label>{{ data.outCurrency | uppercase}}</mat-label>
+    <input matInput [(ngModel)]="amountSold" autocomplete="off">
+</mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-outline-light" mat-button [mat-dialog-close]="amountSold" cdkFocusInitial>Execute</button>
+</div>
+
+
+
+
+
+
+<!-- Alternatives to dipsplay conversion -->
+
+
+<!-- <h2 *ngIf="data.trade.currencyPair.id>0" mat-dialog-title>
+  {{ currencySymbols[data.trade.currencyPair.id-1] }}
+  {{ amountSold | number: '1.2-2' }} ×
+  <div class="frac">
+    <span>${{ cgService.Market[data.trade.currencyPair.id-1].ExchangeRate }}</span>
+    <span class="symbol">/</span>
+    <span class="bottom">{{ currencySymbols[data.trade.currencyPair.id-1] }}</span>
+  </div>
+   = 
+  ${{ amountSold*cgService.Market[data.trade.currencyPair.id-1].ExchangeRate | number: '1.2-2' }}
+
+</h2>
+
+<h2 *ngIf="data.trade.currencyPair.id<0" mat-dialog-title>
+  ${{ amountSold | number: '1.2-2' }} ÷
+  <div class="frac">
+    <span>${{ cgService.Market[-data.trade.currencyPair.id-1].ExchangeRate }}</span>
+    <span class="symbol">/</span>
+    <span class="bottom">{{ currencySymbols[-data.trade.currencyPair.id-1] }}</span>
+  </div>
+   = 
+  {{ amountSold/cgService.Market[-data.trade.currencyPair.id-1].ExchangeRate | number: '1.2-2' }}
+</h2>
+
+
+<h2 *ngIf="data.trade.currencyPair.id>0" mat-dialog-title>
+  {{ currencySymbols[data.trade.currencyPair.id-1] }}
+  {{ amountSold | number: '1.2-2' }} ×
+  {{ cgService.Market[data.trade.currencyPair.id-1].ExchangeRate }}
+  <div class="frac">
+    <span>$</span>
+    <span class="symbol">/</span>
+    <span class="bottom">{{ currencySymbols[data.trade.currencyPair.id-1] }}</span>
+  </div>
+   = 
+  ${{ amountSold*cgService.Market[data.trade.currencyPair.id-1].ExchangeRate | number: '1.2-2' }}
+
+</h2>  -->

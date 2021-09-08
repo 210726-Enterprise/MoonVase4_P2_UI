@@ -1,0 +1,21 @@
+<div class="container mt-5">
+    <table class="table table-condensed table-striped table-bordered">
+      <thead class="bg-dark text-light font-weight-bolder">
+        <tr>
+          <th class="text-center"><h2>Currency Pair</h2></th>
+          <th class="text-center"><h2>Timestamp</h2></th>
+          <th class="text-center"><h2>Exchange Rate</h2></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let quote of this.cgService.Market">
+            <td class="text-center"><h2>{{ quote.CurrencyPair | uppercase}}</h2></td>
+            <td class="text-center"><h2>{{ quote.Timestamp | date: "medium" }}</h2></td>
+            <td *ngIf="quote.Delta>0" class="text-dark text-center table-success"><h2>{{ quote.ExchangeRate }}</h2></td>
+            <td *ngIf="quote.Delta==0" class="text-dark text-center"><h2>{{ quote.ExchangeRate }}</h2></td>
+            <td *ngIf="quote.Delta<0" class="text-dark text-center table-danger"><h2>{{ quote.ExchangeRate }}</h2></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="float: right;"> last queried: {{ cgService.lastUpdate | date: "h:mm:ss:SSS a"}}</p>
+  </div>

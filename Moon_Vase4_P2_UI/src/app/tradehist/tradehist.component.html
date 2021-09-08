@@ -1,0 +1,21 @@
+<button class="btn btn-outline-dark btn-sm m-4" (click)="toggleTradeHistory()">🧾</button>
+<div class="container mt-5" [hidden]="hide">
+    <table class="table table-striped table-hover table-sm">
+        <thead class="bg-dark text-light">
+            <tr>
+              <th scope="col">Timestamp</th>
+              <th scope="col">CurrencyPair</th>
+              <th scope="col">Exchange Rate</th>
+              <th scope="col">ΔUSD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let trade of traderService.tradeHist">                
+                <td>{{ trade.timestamp | date: "medium" }}</td>
+                <td>{{ trade.currencyPair.currencyPair | uppercase }}</td>
+                <td>{{ trade.rate }}</td>
+                <td>${{ trade.usdAmount | number: "1.2-2" }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

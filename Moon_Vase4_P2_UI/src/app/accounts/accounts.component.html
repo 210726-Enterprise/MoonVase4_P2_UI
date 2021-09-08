@@ -1,0 +1,87 @@
+<div class="container mt-3" *ngIf="trader">
+
+    <p class="display-6 text-center text-dark">{{ trader.firstName }} {{ trader.lastName }} - Currency Holdings</p>
+    <div class="card-group mt-5">
+        <div class="card mx-3 shadow-lg">
+            <div class="card-body text-center bg-dark">
+                <h1 class="card-text display-6 text-white">${{ trader.account.usd | number: '1.2-2'}}</h1>
+            </div>
+            <div class="card-footer text-center bg-success">
+                <h3 class="card-text text-white font-weight-bolder">USD
+                    <button *ngIf="trader.account.usd > 0"
+                        mat-button [matMenuTriggerFor]="trade"
+                        class="btn btn-outline-light btn-sm"
+                        style="float: right;">Trade</button>
+                        <mat-menu #trade="matMenu">
+                            <button mat-menu-item (click)="executeTrade(1, false)">EUR</button>
+                            <button mat-menu-item (click)="executeTrade(2, false)">GBP</button>
+                            <button mat-menu-item (click)="executeTrade(3, false)">NZD</button>
+                        </mat-menu>
+                </h3>
+            </div>
+        </div>
+
+        <div class="card mx-3">
+            <div class="card-body text-center bg-dark">
+                <h1 class="card-text text-white display-6">€{{ trader.account.eur | number: '1.2-2'}}</h1>
+            </div>
+            <div class="card-footer text-center bg-success">
+                <h3 class="card-text text-white font-weight-bolder">EUR
+                    <button *ngIf="trader.account.eur > .00499"
+                    type="button"
+                    class="btn btn-outline-light btn-sm"
+                    style="float: right;"
+                    mat-raised-button (click)="executeTrade(1)">trade</button>
+                </h3>
+            </div>
+        </div>
+
+        <div class="card mx-3">
+            <div class="card-body text-center bg-dark">
+                <h1 class="card-text text-white display-6">£{{ trader.account.gbp | number: '1.2-2'}}</h1>
+            </div>
+            <div class="card-footer text-center bg-success">
+                <h3 class="card-text text-white font-weight-bolder">GBP
+                    <button *ngIf="trader.account.gbp > .00499"
+                    type="button"
+                    class="btn btn-outline-light btn-sm"
+                    style="float: right;"
+                    mat-raised-button (click)="executeTrade(2)">trade</button>
+                </h3>
+            </div>
+        </div>
+
+        <div class="card mx-3">
+            <div class="card-body text-center bg-dark">
+                <h1 class="card-text text-white display-6">NZ${{ trader.account.nzd | number: '1.2-2'}}</h1>
+            </div>
+            <div class="card-footer text-center bg-success">
+                <h3 class="card-text text-white font-weight-bolder">NZD
+                    <button *ngIf="trader.account.nzd > .004999"
+                    type="button"
+                    class="btn btn-outline-light btn-sm"
+                    style="float: right;"
+                    mat-raised-button (click)="executeTrade(3)">trade</button>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="trader.account.eur+trader.account.gbp+trader.account.nzd>=.01">
+    <!-- <p class="display-6 mt-5"></p> -->
+        <div class="card mx-3 mt-5">
+            <div class="card-header bg-dark text-center text-light">
+                <h1>Close all positions</h1>
+            </div>
+            <div class="card-body text-center">
+                <h1 class="card-text">Convert all foriegn currency to Dollars right now and you will have: <p class="display-6 mt-2">${{ 
+                    trader.account.eur*cgService.Market[0].ExchangeRate
+                    + trader.account.gbp*cgService.Market[1].ExchangeRate
+                    + trader.account.nzd*cgService.Market[2].ExchangeRate
+                    + trader.account.usd
+                    | number: '1.2-2'}}</p></h1>
+                    <button class="btn btn-success btn-sm" style="float: center;" (click)="closeAllPositions()">Execute</button>
+        </div>
+    </div>
+
+</div>
+<!-- <mat-slider thumbLabel min="1" max="100" step="1" value="50"></mat-slider> -->

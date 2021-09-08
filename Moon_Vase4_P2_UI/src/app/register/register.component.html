@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-4 col-lg-4 bg-dark mt-5">
+      <div class="login-wrap p-4 p-md">
+        <h3 class="text-center mb-4 text-white">Create Trading Account</h3>
+        <form class="form">
+          <div class="form-group">
+            <label for="">First Name</label>
+            <input [(ngModel)]="trader.firstName" name="firstName" type="text" class="form-control" placeholder="First Name" required/>
+          <!-- </div>
+          <div class="form-group"> -->
+            <label for="">Last Name</label>
+            <input [(ngModel)]="trader.lastName" name="lastName" type="text" class="form-control" placeholder="Last Name" required/>
+          <!-- </div>
+          <div class="form-group"> -->
+              <label for="">Username</label>
+              <input [(ngModel)]="trader.username" name="username" type="text" class="form-control" placeholder="Username" required/>
+            <!-- </div>
+            <div class="form-group"> -->
+              <label for="">Password</label>
+              <input [(ngModel)]="trader.password" name="passord" type="password" class="form-control" placeholder="Password" required/>
+              <label for="">Password</label>
+              <input [(ngModel)]="verify" name="passord2" type="password" class="form-control" placeholder="Password" required/>
+            </div>
+          <button (click)="register()" type="button" class="form-control btn btn-success rounded submit px-3 mt-4 login-button">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

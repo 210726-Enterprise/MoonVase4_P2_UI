@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-4 col-lg-4 bg-dark mt-5">
+      <div class="login-wrap p-4 p-md">
+        <h1 class="text-center mb-4 text-white">Login</h1>
+        <form class="form">
+          <div class="form-group">
+            <label for="">Username</label>
+            <input [(ngModel)]="visitor.username" name="username" type="text" class="form-control" placeholder="Username" required/>
+
+            <label for="">Password</label>
+            <input [(ngModel)]="visitor.password" name="password" type="password" class="form-control" placeholder="Password" required/>
+
+          </div>
+          <button (click)="login()" type="button" class="form-control btn btn-success rounded submit px-3 my-4 login-button">Submit</button>
+        </form>
+        <a class="nav-link text-center text-success" role="button" (click)="createNewAccount()">Create New Account</a>
+      </div>
+    </div>
+  </div>
+</div>
