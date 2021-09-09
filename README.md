@@ -5,7 +5,7 @@ Faurex is an application that allows traders to exchange U.S Dollars to a set va
 Traders will be able to create a single account, deposit money, and compare the trade value of U.S Dollars to the other currencies. 
 The app will track these trades made for traders to review later. This particular repository is focused on the frontend of our web application. 
 
-## Link to the backend of Project2 
+## Link to the Backend of Project2 
 https://github.com/210726-Enterprise/MoonVase4_P2.git
 
 ## Tech Stack
