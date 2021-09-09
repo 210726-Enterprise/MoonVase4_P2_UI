@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 
 export class TraderService {
 
-  private baseUrl = 'http://localhost:8080/api';
+  private baseUrl = 'http://fauxrexapi-env.eba-xgpwevmr.us-east-2.elasticbeanstalk.com/api';
+  // private baseUrl = 'http://localhost:8080/api'
   private httpOptions = { // these headers for /authenticate and /register only, others should include jwt from local storage
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

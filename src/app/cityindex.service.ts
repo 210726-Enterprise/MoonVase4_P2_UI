@@ -4,10 +4,16 @@ import { credentials } from './apicredentials';
 import { Observable, Subscription } from 'rxjs';
 import { Quote } from './quote';
 
+export interface CgCreds {
+  Password: string;
+  UserName: string;
+  AppKey: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CityindexService {
 
   private base = "https://ciapi.cityindex.com/TradingAPI"
@@ -16,6 +22,7 @@ export class CityindexService {
   };
 
   private session!: string;
+  private cgCreds!: CgCreds;
 
   public lastUpdate = new Date();
   public Market: Quote[] = [
@@ -28,15 +35,34 @@ export class CityindexService {
     private http: HttpClient
   ) { }
 
-  getSessionId(): Promise<any> {
-    let payload = {
-      Password: credentials.pword,
-      AppVersion: "1",
-      UserName: credentials.user,
-      AppKey: credentials.appkey
-    }
+  async getCgCredentials(): Promise<any>{
+    console.log("GET CREDENTIALS")
+    // let url = "http://localhost:8080/api/trade/cg"
+    let url = "http://fauxrexapi-env.eba-xgpwevmr.us-east-2.elasticbeanstalk.com/api"
+    let httpOptions = { // these headers for /authenticate and /register only, others should include jwt from local storage
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.get<any>(url, httpOptions).toPromise()
+  }
+
+
+  async getSessionId(data: any): Promise<any> {
+    console.log("GET SESSION ID")
     let url = `${this.base}/session`;
-    return this.http.post<any>(url, payload, this.httpOptions).toPromise();
+    return this.http.post<any>(url, data, this.httpOptions).toPromise();
+  }
+
+  streamQuotes() {
+    this.getCgCredentials().then(
+        (data)=>this.getSessionId(data)
+          .then((data)=>{
+            this.session = data.Session;
+            setInterval(() => this.getQuote(0), 10000)
+            setInterval(() => this.getQuote(1), 10000)
+            setInterval(() => this.getQuote(2), 10000)
+          }
+        ) 
+    )
   }
 
   getQuote(currencyPairIndex: number) {
@@ -61,14 +87,5 @@ export class CityindexService {
     }
   }
 
-  streamQuotes() {
-    this.getSessionId().then((data)=>{
-      this.session = data.Session;
-
-      setInterval(() => this.getQuote(0), 10000)
-      setInterval(() => this.getQuote(1), 10000)
-      setInterval(() => this.getQuote(2), 10000)
-    })
-  }
-
 }
+

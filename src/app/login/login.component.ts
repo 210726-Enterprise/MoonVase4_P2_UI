@@ -5,6 +5,7 @@ import { Visitor } from '../visitor';
 import { TraderService } from '../trader.service';
 import { Trader } from '../trader';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { CityindexService } from '../cityindex.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private traderService: TraderService,
+    public cgService: CityindexService,
     private router: Router,
     private flashMessagesService: FlashMessagesService
     ) { }
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit {
     .subscribe(
       (res: any) => {
         localStorage.setItem('token', res.jwt);
+        this.cgService.streamQuotes();
         this.router.navigate(['/account']);
 
       },

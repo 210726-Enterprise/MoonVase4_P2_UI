@@ -10,8 +10,9 @@ import { TraderService } from './trader.service';
 export class AppComponent implements OnInit{
   
   constructor(
-    public cgService: CityindexService,
-    public traderService: TraderService
+
+    public traderService: TraderService,
+    public cgService: CityindexService
   ) {}
 
   ngOnInit(): void {
