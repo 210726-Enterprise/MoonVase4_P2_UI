@@ -36,10 +36,8 @@ export class CityindexService {
   ) { }
 
   async getCgCredentials(): Promise<any>{
-    console.log("GET CREDENTIALS")
-    // let url = "http://localhost:8080/api/trade/cg"
-    let url = "http://fauxrexapi-env.eba-xgpwevmr.us-east-2.elasticbeanstalk.com/api"
-    let httpOptions = { // these headers for /authenticate and /register only, others should include jwt from local storage
+    let url = "http://fauxrexapi-env.eba-xgpwevmr.us-east-2.elasticbeanstalk.com/api/trade/cg"
+    let httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
     return this.http.get<any>(url, httpOptions).toPromise()
@@ -47,7 +45,6 @@ export class CityindexService {
 
 
   async getSessionId(data: any): Promise<any> {
-    console.log("GET SESSION ID")
     let url = `${this.base}/session`;
     return this.http.post<any>(url, data, this.httpOptions).toPromise();
   }
@@ -57,9 +54,9 @@ export class CityindexService {
         (data)=>this.getSessionId(data)
           .then((data)=>{
             this.session = data.Session;
-            setInterval(() => this.getQuote(0), 10000)
-            setInterval(() => this.getQuote(1), 10000)
-            setInterval(() => this.getQuote(2), 10000)
+            setInterval(() => this.getQuote(0), 2000)
+            setInterval(() => this.getQuote(1), 2000)
+            setInterval(() => this.getQuote(2), 2000)
           }
         ) 
     )
