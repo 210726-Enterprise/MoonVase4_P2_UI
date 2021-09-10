@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { credentials } from './apicredentials';
 import { Observable, Subscription } from 'rxjs';
 import { Quote } from './quote';
 
@@ -65,7 +64,7 @@ export class CityindexService {
   getQuote(currencyPairIndex: number) {
     this.lastUpdate = new Date();
     let marketId = this.Market[currencyPairIndex].MarketId;
-    let url = `${this.base}/market/${marketId}/tickhistory?PriceTicks=1&priceType=MID&UserName=${credentials.user}&Session=${this.session}`
+    let url = `${this.base}/market/${marketId}/tickhistory?PriceTicks=1&priceType=MID&UserName=${this.cgCreds.UserName}&Session=${this.session}`
     this.http.get<any>(url, this.httpOptions)
       .subscribe(
         result => {
